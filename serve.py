@@ -11,7 +11,6 @@ PORT = 8080
 
 class Proxy(SimpleHTTPServer.SimpleHTTPRequestHandler):
     def do_GET(self):
-        print self.path
         if(self.path.startswith("/proxy/")):
             req = Request("http://"+self.path[7:])
             req.add_header("Accept", "application/json")
