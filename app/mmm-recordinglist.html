@@ -1,0 +1,23 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+<link rel="import" href="/bower_components/core-menu/core-menu.html">
+<link rel="import" href="mmm-program.html">
+
+<polymer-element name="mmm-recordinglist" attributes="recordings selected">
+  <template>
+    <core-menu id="menu" on-core-select="{{selectProgram}}">
+    <template repeat="{{ program in recordings.ProgramList.Programs }}">
+      <mmm-program program="{{program}}"></mmm-program>
+    </template>
+    </core-menu>
+  </template>
+
+  <script>
+    Polymer({
+      selectProgram: function(e, detail) {
+        if(detail.isSelected) {
+          this.selected = detail.item.program;
+        }
+      }
+    });
+  </script>
+</polymer-element>

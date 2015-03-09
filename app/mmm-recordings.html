@@ -1,0 +1,82 @@
+<link rel="import" href="/bower_components/core-localstorage/core-localstorage.html">
+<link rel="import" href="/bower_components/core-ajax/core-ajax.html">
+<link rel="import" href="/bower_components/core-scaffold/core-scaffold.html">
+<link rel="import" href="/bower_components/core-header-panel/core-header-panel.html">
+<link rel="import" href="/bower_components/core-toolbar/core-toolbar.html">
+<link rel="import" href="/bower_components/core-icons/core-icons.html">
+<link rel="import" href="/bower_components/paper-elements/paper-elements.html">
+<link rel="import" href="mmm-recordinglist.html">
+<link rel="import" href="mmm-recorded.html">
+
+<polymer-element name="mmm-recordings" attributes="recordings">
+  <template>
+    <style>
+      .dropdown {
+        top: 38px;
+      }
+      paper-item {
+        color: black;
+      }
+    </style>
+    <core-localstorage name="localconfig" value="{{config}}"></core-localstorage>
+    <core-ajax
+      auto
+      url="mythconfig.json"
+      handleAs="json"
+      response={{mythconfig}}></core-ajax>
+    <core-ajax
+      id="recordingList"
+      url="/proxy/{{config.backend}}/Dvr/GetRecordedList"
+      headers='{"Accept": "application/json"}'
+      handleAs="json"
+      response={{recordings}}></core-ajax>
+    <core-scaffold>
+      <core-header-panel navigation flex mode="seamed">
+        <core-toolbar style="background-color: #526E9C; color: #fff;">
+          <paper-icon-button icon="arrow-back" on-tap="{{reset}}"></paper-icon-button>
+          <div>Recordings</div>
+        </core-toolbar>
+        <mmm-recordinglist recordings={{recordings}} selected={{selected}}></mmm-recordinglist>
+      </core-header-panel>
+      <div tool horizontal layout flex end-justified>
+        <paper-menu-button>
+          <paper-icon-button icon="menu"></paper-icon-button>
+          <paper-dropdown halign="right" class="dropdown">
+            <core-menu selected="{{config.frontend}}" valueattr="id" on-core-select="{{selectFrontend}}">
+              <template repeat="{{ frontend in mythconfig.frontends | getKeys }}">
+                <paper-item id="{{frontend}}">{{mythconfig.frontends[frontend]}}</paper-item>
+              </template>
+            </core-menu>
+          </paper-dropdown>
+        </paper-menu-button>
+      </div>
+      <mmm-recordedprogram class="content" program={{selected}}></mmm-recordedprogram>
+    </core-scaffold>
+  </template>
+  <script>
+    Polymer({
+      ready: function() {
+        if(this.config && this.config.backend) {
+          this.$.recordingList.go();
+        } else {
+          this.config = {};
+        }
+      },
+      selectFrontend: function(e, detail) {
+        if (detail.isSelected) {
+          this.config = {frontend: detail.item.id, backend: this.mythconfig.backend};
+          this.$.recordingList.go();
+          console.log(this.config);
+        }
+      },
+      getKeys: function(o) {
+        if(o)
+          return Object.keys(o);
+        return [];
+      },
+      reset: function() {
+          this.fire('next');
+      }
+    });
+  </script>
+</polymer-element>

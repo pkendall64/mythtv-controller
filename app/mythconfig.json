@@ -1,0 +1,9 @@
+{
+    "backend": "hal:6544",
+    "frontends": {
+        "lounge:6547": "Lounge",
+        "family:6547": "Family",
+        "studio:6547": "Studio",
+        "10.1.1.99:6547": "Paul's Desktop"
+    }
+}
