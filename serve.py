@@ -1,4 +1,6 @@
-# a truly minimal HTTP proxy
+#!/usr/bin/python
+
+# a minimal HTTP server with proxying on the /proxy/ path
 
 import SocketServer
 import SimpleHTTPServer
@@ -18,6 +20,14 @@ class Proxy(SimpleHTTPServer.SimpleHTTPRequestHandler):
         else:
             SimpleHTTPServer.SimpleHTTPRequestHandler.do_GET(self)
 
+    def log_message(self, format, *args):
+        return
+
 httpd = SocketServer.ForkingTCPServer(('', PORT), Proxy)
 print "serving at port", PORT
-httpd.serve_forever()
+try:
+    httpd.serve_forever()
+except KeyboardInterrupt:
+    pass
+httpd.server_close()
+
