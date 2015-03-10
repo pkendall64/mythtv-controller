@@ -1,7 +1,12 @@
 <link rel="import" href="/bower_components/polymer/polymer.html">
+
+<link rel="import" href="/bower_components/core-localstorage/core-localstorage.html">
+<link rel="import" href="/bower_components/core-ajax/core-ajax.html">
+<link rel="import" href="/bower_components/core-image/core-image.html">
+<link rel="import" href="/bower_components/core-icons/av-icons.html">
+
 <link rel="import" href="/bower_components/paper-shadow/paper-shadow.html">
 <link rel="import" href="/bower_components/paper-fab/paper-fab.html">
-<link rel="import" href="/bower_components/core-icons/av-icons.html">
 
 <polymer-element name="mmm-recordedprogram" attributes="program">
   <template>
@@ -33,42 +38,40 @@
       headers='{"Accept": "application/json"}'
       handleAs="json"></core-ajax>
 
-        <template if={{program}}>
-    <div vertical layout fit >
-      <div vertical layout flex style="padding: 12px;">
-        <h2><core-image src="/proxy/{{config.backend}}/{{program.Channel.IconURL}}"></core-image>{{program.Title}}</h2>
-        {{program.SubTitle}}
-        <div horizontal layout flex>
-          <div vertical layout flex one>
-            <template repeat="{{ art in program.Artwork.ArtworkInfos | getCoverart() }}">
-              <img horizontal layout  src="/proxy/{{config.backend}}/{{art.URL}}"></img>
-            </template>
-          </div>
-          <div flex three>
-          {{program.Description}}
+    <template if={{program}}>
+      <div vertical layout fit >
+        <div vertical layout flex style="padding: 12px;">
+          <h2><core-image src="/proxy/{{config.backend}}/{{program.Channel.IconURL}}"></core-image>{{program.Title}}</h2>
+          {{program.SubTitle}}
+          <div horizontal layout flex>
+            <div vertical layout flex one>
+              <template repeat="{{ art in program.Artwork.ArtworkInfos | getCoverart() }}">
+                <core-image horizontal layout src="/proxy/{{config.backend}}/{{art.URL}}"></core-image>
+              </template>
+            </div>
+            <div flex three>{{program.Description}}</div>
           </div>
         </div>
-      </div>
-      <paper-shadow horizontal layout justified wrap>
-            <div></div>
+        <paper-shadow horizontal layout justified wrap>
+          <div></div>
           <div layout horizontal center>
             <paper-fab mini icon="av:skip-previous" ></paper-fab>
             <paper-fab mini icon="av:fast-rewind" ></paper-fab>
-          <template if={{playing}}>
-            <paper-fab id="pause" icon="av:pause" on-click="{{pause}}"></paper-fab>
-          </template>
-          <template if={{paused}}>
-            <paper-fab id="play" icon="av:play-arrow" on-click="{{play}}"></paper-fab>
-          </template>
+            <template if={{playing}}>
+              <paper-fab id="pause" icon="av:pause" on-click="{{pause}}"></paper-fab>
+            </template>
+            <template if={{paused}}>
+              <paper-fab id="play" icon="av:play-arrow" on-click="{{play}}"></paper-fab>
+            </template>
             <paper-fab mini icon="av:fast-forward" ></paper-fab>
             <paper-fab mini icon="av:skip-next" ></paper-fab>
           </div>
           <div layout horizontal center end-justified>
-          <paper-fab id="stop" icon="av:stop" on-click="{{stop}}" disabled="{{stopped}}"></paper-fab>
+            <paper-fab id="stop" icon="av:stop" on-click="{{stop}}" disabled="{{stopped}}"></paper-fab>
           </div>
-      </paper-shadow>
-    </div>
-        </template>
+        </paper-shadow>
+      </div>
+    </template>
   </template>
 
   <script>

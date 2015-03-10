@@ -1,10 +1,18 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+
 <link rel="import" href="/bower_components/core-localstorage/core-localstorage.html">
 <link rel="import" href="/bower_components/core-ajax/core-ajax.html">
 <link rel="import" href="/bower_components/core-scaffold/core-scaffold.html">
 <link rel="import" href="/bower_components/core-header-panel/core-header-panel.html">
 <link rel="import" href="/bower_components/core-toolbar/core-toolbar.html">
+<link rel="import" href="/bower_components/core-menu/core-menu.html">
 <link rel="import" href="/bower_components/core-icons/core-icons.html">
-<link rel="import" href="/bower_components/paper-elements/paper-elements.html">
+
+<link rel="import" href="/bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="/bower_components/paper-menu-button/paper-menu-button.html">
+<link rel="import" href="/bower_components/paper-dropdown/paper-dropdown.html">
+<link rel="import" href="/bower_components/paper-item/paper-item.html">
+
 <link rel="import" href="mmm-recordinglist.html">
 <link rel="import" href="mmm-recorded.html">
 
@@ -33,11 +41,13 @@
     <core-scaffold>
       <core-header-panel navigation flex mode="seamed">
         <core-toolbar style="background-color: #526E9C; color: #fff;">
-          <paper-icon-button icon="arrow-back" on-tap="{{reset}}"></paper-icon-button>
           <div>Recordings</div>
         </core-toolbar>
         <mmm-recordinglist recordings={{recordings}} selected={{selected}}></mmm-recordinglist>
       </core-header-panel>
+      <div tool horizontal layout flex start-justified>
+        <paper-icon-button icon="arrow-back" on-tap="{{reset}}"></paper-icon-button>
+      </div>
       <div tool horizontal layout flex end-justified>
         <paper-menu-button>
           <paper-icon-button icon="menu"></paper-icon-button>
@@ -64,7 +74,10 @@
       },
       selectFrontend: function(e, detail) {
         if (detail.isSelected) {
-          this.config = {frontend: detail.item.id, backend: this.mythconfig.backend};
+          this.config = {
+            frontend: detail.item.id, 
+            backend: this.mythconfig.backend
+          };
           this.$.recordingList.go();
           console.log(this.config);
         }
@@ -75,7 +88,7 @@
         return [];
       },
       reset: function() {
-          this.fire('next');
+        this.fire('next');
       }
     });
   </script>
