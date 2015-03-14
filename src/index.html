@@ -10,10 +10,8 @@
 
     <!-- 2. Load the component using an HTML Import -->
     <link rel="import" href="/bower_components/font-roboto/roboto.html">
-    <link rel="import" href="/bower_components/core-animated-pages/core-animated-pages.html">
-    <link rel="import" href="/bower_components/core-image/core-image.html">
 
-    <link rel="import" href="mmm-recordings.html">
+    <link rel="import" href="mmm-launcher.html">
 
     <style>
       html, body {
@@ -22,82 +20,8 @@
       }
     </style>
   </head>
+
   <body fullbleed layout vertical unresolved>
-
-    <polymer-element name="mmm-launcher">
-      <template>
-        <style>
-          .card {
-              position: relative;
-              height: 150px;
-              width: 150px;
-              font-size: 50px;
-              margin: 8px;
-              border-radius: 4px;
-              cursor: default;
-          }
-          .tv {
-              background-color: khaki;
-          }
-          .rec {
-              background-color: tomato;
-          }
-          .vid {
-              background-color: skyblue;
-          }
-          core-image {
-            margin: 10px;
-          }
-          core-animated-pages {
-              height: 100vh;
-          }
-        </style>
-        <core-animated-pages id="pages" flex selected="0" transitions="hero-transition">
-
-          <!-- The launcher page -->
-          <div horizontal layout center center-justified wrap>
-            <paper-shadow class="card tv" id="1" hero-id="item-1" hero on-tap="{{selectView}}">
-              <core-image style="width:130px; height:130px;" sizing="contain" src="images/chrisdesign_comic_tv_electronics.svg"></core-image>
-            </paper-shadow>
-            <paper-shadow class="card rec" id="2" hero-id="item-2" hero on-tap="{{selectView}}">
-              <core-image style="width:130px; height:130px;" sizing="contain" src="images/AJ-simple-VHS-tape.svg"></core-image>
-            </paper-shadow>
-            <paper-shadow class="card vid" id="3" hero-id="item-3" hero on-tap="{{selectView}}">
-              <core-image style="width:130px; height:130px;" sizing="contain" src="images/dniezby-Scene-Slate.svg"></core-image>
-            </paper-shadow>
-          </div>
-
-          <!-- Watch TV page -->
-          <section vertical layout>
-              <div class="view" flex vertical center center-justified layout hero hero-id="item-1">Live TV</div>
-          </section>
-
-          <!-- Recordings page -->
-          <section vertical layout>
-            <div class="view" flex vertical center center-justified layout hero hero-id="item-2">
-              <mmm-recordings on-next="{{resetView}}"></mmm-recordings>
-            </div>
-          </section>
-
-          <!-- Videos page -->
-          <section vertical layout>
-              <div class="view" flex vertical center center-justified layout hero hero-id="item-3">Watch Videos</div>
-          </section>
-
-        </core-animated-pages>
-      </template>
-      <script>
-        Polymer({
-            selectView: function(e) {
-              this.$.pages.selected = e.currentTarget.id;
-            },
-            resetView: function(e) {
-              this.$.pages.selected = 0;
-            }
-        })
-      </script>
-    </polymer-element>
-
     <mmm-launcher></mmm-launcher>
   </body>
 </html>
