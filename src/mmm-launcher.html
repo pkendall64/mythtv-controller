@@ -1,10 +1,12 @@
 <link rel="import" href="/bower_components/polymer/polymer.html">
 
 <link rel="import" href="/bower_components/core-animated-pages/core-animated-pages.html">
+<link rel="import" href="/bower_components/core-animated-pages/transitions/slide-from-right.html">
 <link rel="import" href="/bower_components/core-image/core-image.html">
 <link rel="import" href="/bower_components/paper-shadow/paper-shadow.html">
 
 <link rel="import" href="mmm-recordings.html">
+<link rel="import" href="mmm-guide.html">
 
 <polymer-element name="mmm-launcher">
   <template>
@@ -34,7 +36,7 @@
           height: 100vh;
       }
     </style>
-    <core-animated-pages id="pages" flex selected="0" transitions="hero-transition">
+    <core-animated-pages id="pages" flex selected="0" transitions="hero-transition slide-from-right">
 
       <!-- The launcher page -->
       <div horizontal layout center center-justified wrap>
@@ -45,6 +47,9 @@
           <core-image style="width:130px; height:130px;" sizing="contain" src="images/AJ-simple-VHS-tape.svg"></core-image>
         </paper-shadow>
         <paper-shadow class="card vid" id="3" hero-id="item-3" hero on-tap="{{selectView}}">
+          <core-image style="width:130px; height:130px;" sizing="contain" src="images/dniezby-Scene-Slate.svg"></core-image>
+        </paper-shadow>
+        <paper-shadow class="card vid" id="4" hero-id="item-4" slide-from-right on-tap="{{selectView}}">
           <core-image style="width:130px; height:130px;" sizing="contain" src="images/dniezby-Scene-Slate.svg"></core-image>
         </paper-shadow>
       </div>
@@ -64,6 +69,13 @@
       <!-- Videos page -->
       <section vertical layout>
           <div flex layout hero hero-id="item-3">Watch Videos</div>
+      </section>
+
+      <!-- Videos page -->
+      <section vertical layout>
+        <div flex layout slide-from-right hero-id="item-4">
+          <mmm-guide on-next="{{resetView}}"></mmm-guide>
+        </div>
       </section>
 
     </core-animated-pages>
